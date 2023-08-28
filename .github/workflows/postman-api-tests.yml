@@ -1,0 +1,34 @@
+name: Newman API Tests
+on:
+  label:
+    types:
+      - push
+  push:
+    branches:
+      - main
+  page_build:
+jobs: 
+  test: 
+    defaults: 
+      run: 
+        working-directory: ./tests
+    environment: testing
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    steps: 
+      - 
+        uses: actions/checkout@v2
+      - 
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "18"
+      - 
+        name: "Install newman"
+        run: "npm install -g newman"
+      - 
+        name: "Install newman reporter"
+        run: "npm install -g newman-reporter-htmlextra"
+      - 
+        name: "Run tests"
+        run: "newman run User.postman_collection.json -e testing.postman_environment.json  
+      
